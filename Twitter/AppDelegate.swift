@@ -42,39 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print(url.description)
-        let requestToken = BDBOAuth1Credential(queryString: url.query)
-        let twitterClient = BDBOAuth1SessionManager(baseURL: URL(string: "https://api.twitter.com")!, consumerKey: "ATNFELmn5qe3oi2ICK6B9P7je", consumerSecret:
-            "jecNfFYWd0oH7XYRq4yVeVdeoRCTmswsi1CRlgP4Wyo0iz1ecs")!
-        twitterClient.fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken: BDBOAuth1Credential?) -> Void in
-            print("I got access token.")
-            twitterClient.get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
-                print("account: \(response)")
-                let userDictionary = response as! NSDictionary
-                
-                let user = User(dictionary: userDictionary)
-                print("name: \(user.name)")
-                print("scrrenname: \(user.screenName)")
-                print("profileurl: \(user.profileUrl)")
-                print("description: \(user.tagline)")
-                
-            }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
-                
-            })
-            twitterClient.get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
-                let dictionaries = response as! [NSDictionary]
-                let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
-                
-                for tweet in tweets {
-                    print("\(tweet.text!)")
-                }
-            }, failure: { (task:URLSessionDataTask?, error: Error) -> Void in
-                
-            })
-        }) { (error: Error?) -> Void in
-            print("Error: \(error?.localizedDescription)")
-        }
-        
+
+        TwitterClient.sharedInstance.handleUrl(url: url)
         
         return true
     }
