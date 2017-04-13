@@ -34,11 +34,24 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
+    func logout() {
+        User.currentUser = nil //set the current user to nil before loggingout
+        deauthorize()
+        
+        // post a notification "UserDidLogout" to cleanup the user related data - like clear the tweets from table view.
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
+    }
+    
     func handleUrl(url: URL) {
         let requestToken = BDBOAuth1Credential(queryString: url.query)
         fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken: BDBOAuth1Credential?) -> Void in
             
-            self.loginSuccess?()
+            self.currentAccount(success: { (user: User) in
+                User.currentUser = user // set the current user, saves in NSDefaults to persist user
+                self.loginSuccess?()
+            }, failure: { (error: Error) in
+                self.loginFailure?(error)
+            })
             /*currentAccount()
             homeTimeLine(success: { (tweets: [Tweet]) in
                 for tweet in tweets {
@@ -54,21 +67,23 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
-    func currentAccount() {
+    func currentAccount(success: @escaping (User) -> (), failure: @escaping (Error) -> ()) {
         get("1.1/account/verify_credentials.json", parameters: nil, progress: nil,
             success: { (task: URLSessionDataTask, response: Any?) -> Void in
-            print("account: \(response)")
+            //print("account: \(response)")
             let userDictionary = response as! NSDictionary
-            
             let user = User(dictionary: userDictionary)
-            print("name: \(user.name)")
-            print("scrrenname: \(user.screenName)")
-            print("profileurl: \(user.profileUrl)")
-            print("description: \(user.tagline)")
             
-            }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+            success(user)
+            
+            //print("name: \(user.name)")
+            //print("scrrenname: \(user.screenName)")
+            //print("profileurl: \(user.profileUrl)")
+            //print("description: \(user.tagline)")
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+                failure(error)
         })
-        
     }
     
     func homeTimeLine(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
