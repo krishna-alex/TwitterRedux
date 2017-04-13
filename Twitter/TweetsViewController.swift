@@ -23,20 +23,20 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweetsTableView.delegate = self
         tweetsTableView.estimatedRowHeight = 60
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
+        
         //Set Navigation bar color
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.11, green: 0.63, blue: 0.95, alpha: 1.0)
         navigationController?.navigationBar.barStyle = UIBarStyle.black
         
-        TwitterClient.sharedInstance.homeTimeLine(success: { (tweets: [Tweet]) in
-            self.tweets = tweets
-            self.tweetsTableView.reloadData()
-            
-        }, failure: { (error: Error) in
-            print(error.localizedDescription)
-        })
+        //get tweets from home timeline
+        getTweets()
         
+        //Pull to refresh tweets
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        // add refresh control to table view
+        tweetsTableView.insertSubview(refreshControl, at: 0)
         
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,6 +47,18 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func onLogoutButton(_ sender: Any) {
         TwitterClient.sharedInstance.logout()
     }
+    
+    func getTweets() {
+        TwitterClient.sharedInstance.homeTimeLine(success: { (tweets: [Tweet]) in
+            self.tweets = tweets
+            self.tweetsTableView.reloadData()
+            
+        }, failure: { (error: Error) in
+            print(error.localizedDescription)
+        })
+        
+    }
+
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -69,8 +81,18 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         return cell
     }
-
     
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        
+        getTweets()
+        // Tell the refreshControl to stop spinning
+        refreshControl.endRefreshing()
+    }
+    
+    
+}
+
+
     /*
     // MARK: - Navigation
 
@@ -81,4 +103,4 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     */
 
-}
+
