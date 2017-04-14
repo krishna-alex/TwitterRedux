@@ -52,15 +52,6 @@ class TwitterClient: BDBOAuth1SessionManager {
             }, failure: { (error: Error) in
                 self.loginFailure?(error)
             })
-            /*currentAccount()
-            homeTimeLine(success: { (tweets: [Tweet]) in
-                for tweet in tweets {
-                    print(tweet.text)
-                }
-            }, failure: { (error: Error) in
-                print(error.localizedDescription)
-            })*/
-            
         }) { (error: Error?) -> Void in
             print("Error: \(error?.localizedDescription)")
             self.loginFailure?(error!)
@@ -70,17 +61,10 @@ class TwitterClient: BDBOAuth1SessionManager {
     func currentAccount(success: @escaping (User) -> (), failure: @escaping (Error) -> ()) {
         get("1.1/account/verify_credentials.json", parameters: nil, progress: nil,
             success: { (task: URLSessionDataTask, response: Any?) -> Void in
-            //print("account: \(response)")
             let userDictionary = response as! NSDictionary
             let user = User(dictionary: userDictionary)
             
             success(user)
-            
-            //print("name: \(user.name)")
-            //print("scrrenname: \(user.screenName)")
-            //print("profileurl: \(user.profileUrl)")
-            //print("description: \(user.tagline)")
-            
         }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
                 failure(error)
         })
@@ -89,9 +73,6 @@ class TwitterClient: BDBOAuth1SessionManager {
     func homeTimeLine(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
         get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil,
             success: { (task: URLSessionDataTask, response: Any?) -> Void in
-                
-                print(response);
-                
             let dictionaries = response as! [NSDictionary]
             let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
             

@@ -25,9 +25,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
         
         //Set Navigation bar color
-        navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.11, green: 0.63, blue: 0.95, alpha: 1.0)
-        navigationController?.navigationBar.barStyle = UIBarStyle.black
+        //navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.11, green: 0.63, blue: 0.95, alpha: 1.0)
+        //navigationController?.navigationBar.barStyle = UIBarStyle.black
         
+        navigationItem.titleView = UIImageView.init(image: UIImage(named:"Twitter-icon1.png"))
         //get tweets from home timeline
         getTweets()
         

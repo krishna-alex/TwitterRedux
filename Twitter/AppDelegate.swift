@@ -19,8 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         if User.currentUser != nil {
-            print("There is a current user", User.currentUser)
-            
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
             
@@ -33,8 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             self.window?.rootViewController = vc
         }
-        
-        
         return true
     }
 
