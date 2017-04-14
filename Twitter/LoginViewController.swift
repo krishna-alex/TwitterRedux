@@ -25,8 +25,6 @@ class LoginViewController: UIViewController {
     
     
     @IBAction func onLoginButton(_ sender: Any) {
-        /*let twitterClient = BDBOAuth1SessionManager(baseURL: URL(string: "https://api.twitter.com")!, consumerKey: "ATNFELmn5qe3oi2ICK6B9P7je", consumerSecret:
-            "jecNfFYWd0oH7XYRq4yVeVdeoRCTmswsi1CRlgP4Wyo0iz1ecs")! */
         TwitterClient.sharedInstance.login(success: {
             //print("I have logged in")
             self.performSegue(withIdentifier: "loginSegue", sender: nil)

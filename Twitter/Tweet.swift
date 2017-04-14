@@ -9,6 +9,7 @@
 import UIKit
 
 class Tweet: NSObject {
+    var tweetID: Int?
     var text: String?
     var createdAt: Date?
     var retweetCount: Int = 0
@@ -19,9 +20,10 @@ class Tweet: NSObject {
     
     
     init(dictionary: NSDictionary) {
+        tweetID = dictionary["id"] as? Int
         text = dictionary["text"] as? String
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
-        favouritesCount = (dictionary["favourites_count"] as? Int) ?? 0
+        favouritesCount = (dictionary["favorite_count"] as? Int) ?? 0
         
         let createdAtString = dictionary["created_at"] as? String
         if let createdAtString = createdAtString {
@@ -38,7 +40,7 @@ class Tweet: NSObject {
             if let profileUrlString = profileUrlString {
                 profileUrl = NSURL(string: profileUrlString)
             }
-        }
+                    }
         
     }
         

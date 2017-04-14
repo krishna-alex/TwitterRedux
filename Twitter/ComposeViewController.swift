@@ -14,6 +14,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     
     
     var user: User!
+    var tweet: Tweet!
+    var tweetID: Int = 0
     
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
@@ -35,6 +37,13 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
             
         }) { (error: Error) in
             print(error.localizedDescription)
+        }
+        
+        //Check for reply or new tweet
+        if let tweet = tweet {
+            //set response id for tweet compose
+            tweetID = tweet.tweetID!
+            tweetTextView.becomeFirstResponder()
         }
     }
 
@@ -69,7 +78,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBAction func onTweetButton(_ sender: Any) {
         let tweetMessage = tweetTextView.text
         
-        TwitterClient.sharedInstance.tweet(message: tweetMessage!, success: { (Tweet) in
+        TwitterClient.sharedInstance.tweet(message: tweetMessage!, tweetID: tweetID, success: { (Tweet) in
             print("I tweeted")
             self.dismiss(animated: true, completion: nil)
         }) { (error: Error) in

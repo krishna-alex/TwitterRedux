@@ -91,6 +91,20 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         refreshControl.endRefreshing()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if(segue.identifier == "TweetDetailView") {
+            let destinationViewController = segue.destination as! TweetDetailViewController
+            
+            if let indexPath = tweetsTableView.indexPathForSelectedRow {
+                let cell = tweetsTableView.cellForRow(at: indexPath) as! TweetCell
+                let indexPath = tweetsTableView.indexPath(for: cell)
+                let tweet = tweets[(indexPath?.row)!]
+                destinationViewController.tweet = tweet
+            }
+        }
+    }
+    
     
 }
 

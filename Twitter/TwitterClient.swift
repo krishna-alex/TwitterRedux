@@ -25,7 +25,6 @@ class TwitterClient: BDBOAuth1SessionManager {
         TwitterClient.sharedInstance.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: URL(string: "twitterdemo://oauth"), scope: nil, success: { (requestToken: BDBOAuth1Credential?) -> Void in
             let token = requestToken?.token
             let url = URL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\(token!)")!
-            //print(url)
             UIApplication.shared.open(url)
             
         }) { (error: Error?) -> Void in
@@ -75,15 +74,14 @@ class TwitterClient: BDBOAuth1SessionManager {
             success: { (task: URLSessionDataTask, response: Any?) -> Void in
             let dictionaries = response as! [NSDictionary]
             let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
-            
             success(tweets)
         }, failure: { (task:URLSessionDataTask?, error: Error) -> Void in
             failure(error)
         })
     }
     
-    func tweet(message: String, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
-        let params = ["status": message] as [String : Any]
+    func tweet(message: String, tweetID: Int, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
+        let params = ["status": message, "in_reply_to_status_id": tweetID] as [String : Any]
         print("tried to tweet", params)
         post("1.1/statuses/update.json", parameters: params, progress: nil,
              success: { (task: URLSessionDataTask, response: Any?) in
@@ -94,6 +92,37 @@ class TwitterClient: BDBOAuth1SessionManager {
             failure(error)
         })
         
+    }
+    
+    func retweet(params: NSDictionary?, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
+        let tweetID = params!["id"] as! Int
+        post("1.1/statuses/retweet/\(tweetID).json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            let tweet = Tweet(dictionary: response as! NSDictionary)
+            success(tweet)
+        }, failure: { (task: URLSessionDataTask?, error:Error) in
+            failure(error)
+        })
+        
+    }
+    
+    func populateTweetByID(params: NSDictionary?, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+        let tweetID = params!["id"] as! Int
+        get("1.1/statuses/show.json?id=\(tweetID)", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            let tweet = Tweet(dictionary: response as! NSDictionary)
+            success(tweet)
+        }) { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+        }
+        
+    }
+    
+    func favorite(params: NSDictionary?, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+        post("1.1/favorites/create.json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            let tweet = Tweet(dictionary: response as! NSDictionary)
+            success(tweet)
+        }, failure: { (task: URLSessionDataTask?, error:Error) in
+            failure(error)
+        })
     }
 
 }
