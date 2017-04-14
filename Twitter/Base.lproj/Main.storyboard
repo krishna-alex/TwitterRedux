@@ -124,6 +124,7 @@
                                             <outlet property="screenNameLabel" destination="lmF-cN-1DN" id="L7A-rE-9a3"/>
                                             <outlet property="timestampLabel" destination="Uj1-EK-a7X" id="QS1-Mt-wEe"/>
                                             <outlet property="tweetTextLabel" destination="ntN-Qw-NXJ" id="Ss4-gC-LNQ"/>
+                                            <segue destination="4fR-sb-ehj" kind="show" id="w2m-lt-W0M"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -132,14 +133,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="Nht-vC-Agy">
-                        <barButtonItem key="leftBarButtonItem" title="Sign out" id="pCn-ae-kK4">
-                            <color key="tintColor" red="0.35024676490000001" green="0.86494157220000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem key="leftBarButtonItem" image="SignOut" id="pCn-ae-kK4">
+                            <color key="tintColor" red="0.23923811253111416" green="0.5935081239583353" blue="0.69144590736040601" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="onLogoutButton:" destination="Ux2-yJ-yCz" id="58Q-DX-vVA"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Compose" id="ZgO-OR-qnv">
-                            <color key="tintColor" red="0.35024676490000001" green="0.86494157220000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem key="rightBarButtonItem" image="Compose" id="ZgO-OR-qnv">
+                            <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="PRZ-q5-gWg" kind="presentation" id="YI3-pd-ar5"/>
                             </connections>
@@ -152,6 +153,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bgW-UQ-xh9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2152.5" y="134.1549295774648"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="SN9-H9-YMD">
+            <objects>
+                <viewController id="4fR-sb-ehj" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GHN-xi-uba"/>
+                        <viewControllerLayoutGuide type="bottom" id="CAL-hx-Qz6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GAw-wh-hbn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K6K-MH-9gF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3131" y="-65"/>
         </scene>
         <!--Compose View Controller-->
         <scene sceneID="xso-9U-GQH">
@@ -206,10 +225,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xul-NE-QHM">
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="2ei-Rj-oZO">
-                            <color key="tintColor" red="0.35024676490000001" green="0.86494157220000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem key="leftBarButtonItem" image="Cancel" id="2ei-Rj-oZO">
+                            <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="onCancelButton:" destination="QoA-70-bn5" id="3s5-cl-3Az"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="Tweet" id="Aou-qD-yIT">
+                            <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="onTweetButton:" destination="QoA-70-bn5" id="OV9-pp-FKj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -222,7 +247,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zuo-ed-BRn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4083.75" y="119.36619718309859"/>
+            <point key="canvasLocation" x="4084" y="615"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="p8u-3k-qkk">
@@ -258,7 +283,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T6N-pn-Q5m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3084.375" y="118.30985915492958"/>
+            <point key="canvasLocation" x="3133" y="615"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Cancel" width="29" height="29"/>
+        <image name="Compose" width="29" height="29"/>
+        <image name="SignOut" width="29" height="29"/>
+        <image name="Tweet" width="29" height="29"/>
+    </resources>
 </document>

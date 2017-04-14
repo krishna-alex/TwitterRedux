@@ -30,7 +30,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         TwitterClient.sharedInstance.currentAccount(success: { (user: User) in
             self.user = user
             self.userNameLabel.text = user.name
-            self.screenNameLabel.text = user.screenName
+            self.screenNameLabel.text = "@" + user.screenName!
             self.profileImageView.setImageWith(user.profileUrl as! URL)
             
         }) { (error: Error) in
@@ -64,7 +64,21 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         }
         tweetTextView.resignFirstResponder()
     }
-
+    
+    
+    @IBAction func onTweetButton(_ sender: Any) {
+        let tweetMessage = tweetTextView.text
+        
+        TwitterClient.sharedInstance.tweet(message: tweetMessage!, success: { (Tweet) in
+            print("I tweeted")
+            self.dismiss(animated: true, completion: nil)
+        }) { (error: Error) in
+            print("tweet error")
+            print(error.localizedDescription)
+        }
+        
+    }
+    
     /*
     // MARK: - Navigation
 

@@ -11,8 +11,8 @@ import BDBOAuth1Manager
 
 class TwitterClient: BDBOAuth1SessionManager {
     
-    static let sharedInstance = TwitterClient(baseURL: URL(string: "https://api.twitter.com")!, consumerKey: "ATNFELmn5qe3oi2ICK6B9P7je", consumerSecret:
-        "jecNfFYWd0oH7XYRq4yVeVdeoRCTmswsi1CRlgP4Wyo0iz1ecs")!
+    static let sharedInstance = TwitterClient(baseURL: URL(string: "https://api.twitter.com")!, consumerKey: "ANFSbP7fZkEwUfZ32S9K38ih8", consumerSecret:
+        "QyuhCGKJL9LvZZakOJWjRNYLnmQlwV8Id0x1sNPC3fNtwtPQ7U")!
     
     var loginSuccess: (() -> ())?
     var loginFailure: ((Error) -> ())?
@@ -80,6 +80,20 @@ class TwitterClient: BDBOAuth1SessionManager {
         }, failure: { (task:URLSessionDataTask?, error: Error) -> Void in
             failure(error)
         })
+    }
+    
+    func tweet(message: String, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
+        let params = ["status": message] as [String : Any]
+        print("tried to tweet", params)
+        post("1.1/statuses/update.json", parameters: params, progress: nil,
+             success: { (task: URLSessionDataTask, response: Any?) in
+                let tweet = Tweet(dictionary: response as! NSDictionary)
+                success(tweet)
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            print("failure ocurred", error)
+            failure(error)
+        })
+        
     }
 
 }

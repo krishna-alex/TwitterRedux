@@ -29,6 +29,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //navigationController?.navigationBar.barStyle = UIBarStyle.black
         
         navigationItem.titleView = UIImageView.init(image: UIImage(named:"Twitter-icon1.png"))
+        
         //get tweets from home timeline
         getTweets()
         
