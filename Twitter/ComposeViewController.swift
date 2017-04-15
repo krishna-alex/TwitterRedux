@@ -9,19 +9,16 @@
 import UIKit
 
 class ComposeViewController: UIViewController, UITextViewDelegate {
+    @IBOutlet weak var screenNameLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var tweetTextView: UITextView!
+    @IBOutlet weak var profileImageView: UIImageView!
 
-    @IBOutlet weak var userImageButton: UIBarButtonItem!
-    
-    
     var user: User!
     var tweet: Tweet!
     var tweetID: Int = 0
+    var replyTweet: Bool = false
     
-    @IBOutlet weak var screenNameLabel: UILabel!
-    @IBOutlet weak var userNameLabel: UILabel!
-    
-    @IBOutlet weak var tweetTextView: UITextView!
-    @IBOutlet weak var profileImageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,27 +26,27 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         tweetTextView.text = "What's happening?"
         tweetTextView.textColor = .lightGray
         
+        //Check for reply or new tweet
+        if let tweet = tweet {
+            replyTweet = true
+            tweetID = tweet.tweetID!
+            tweetTextView.text = "@" + tweet.screenName! + " "
+            tweetTextView.textColor = .black
+        }
+        tweetTextView.becomeFirstResponder()
+        
         TwitterClient.sharedInstance.currentAccount(success: { (user: User) in
             self.user = user
             self.userNameLabel.text = user.name
             self.screenNameLabel.text = "@" + user.screenName!
             self.profileImageView.setImageWith(user.profileUrl as! URL)
-            
         }) { (error: Error) in
             print(error.localizedDescription)
-        }
-        
-        //Check for reply or new tweet
-        if let tweet = tweet {
-            //set response id for tweet compose
-            tweetID = tweet.tweetID!
-            tweetTextView.becomeFirstResponder()
         }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func onCancelButton(_ sender: Any) {
@@ -58,10 +55,12 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     
     func textViewDidBeginEditing(_ tweetTextView: UITextView)
     {
+        if replyTweet == false {
             tweetTextView.text = ""
             tweetTextView.textColor = .black
+        }
 
-        tweetTextView.becomeFirstResponder() //Optional
+        //tweetTextView.becomeFirstResponder() //Optional
     }
     
     func textViewDidEndEditing(_ tweetTextView: UITextView)
@@ -85,7 +84,6 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
             print("tweet error")
             print(error.localizedDescription)
         }
-        
     }
     
     /*

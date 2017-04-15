@@ -28,7 +28,6 @@ class TwitterClient: BDBOAuth1SessionManager {
             UIApplication.shared.open(url)
             
         }) { (error: Error?) -> Void in
-            print("error: \(error?.localizedDescription)")
             self.loginFailure?(error!)
         }
     }

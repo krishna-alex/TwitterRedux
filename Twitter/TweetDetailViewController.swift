@@ -9,7 +9,6 @@
 import UIKit
 
 class TweetDetailViewController: UIViewController {
-    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var sreenNameLabel: UILabel!
@@ -25,7 +24,6 @@ class TweetDetailViewController: UIViewController {
     var retweetResponse: Tweet!
     var favoriteResponse: Tweet!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,18 +34,10 @@ class TweetDetailViewController: UIViewController {
         tweetTextLabel.text = tweet.text
         retweetLabel.text = "\(tweet.retweetCount) RETWEETS"
         likesLabel.text = "\(tweet.favouritesCount) LIKES"
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func onReplyButton(_ sender: Any) {
-        
-        
     }
     
     @IBAction func onRetweetButton(_ sender: Any) {
@@ -59,7 +49,6 @@ class TweetDetailViewController: UIViewController {
             self.retweetResponse = tweet
             self.retweetLabel.text = "\(self.retweetResponse.retweetCount) RETWEETS"
         }, failure: { (error: Error?) in
-            print("retweet failed")
             print(error?.localizedDescription)
         })
     }
@@ -73,10 +62,8 @@ class TweetDetailViewController: UIViewController {
             self.favoriteResponse = tweet
             self.likesLabel.text = "\(self.favoriteResponse.favouritesCount) LIKES"
         }, failure: { (error: Error?) in
-            print("Favorite failed")
             print(error?.localizedDescription)
         })
-
     }
     
     
@@ -98,5 +85,4 @@ class TweetDetailViewController: UIViewController {
             ComposeVC.tweet = tweet
         }
     }
-
 }

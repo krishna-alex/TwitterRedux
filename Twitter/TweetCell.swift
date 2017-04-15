@@ -24,7 +24,6 @@ class TweetCell: UITableViewCell {
         }
         set(singleTweet) {
             self._tweet = singleTweet
-            
             if (self._tweet != nil) {
                 tweetTextLabel?.text = _tweet?.text
                 nameLabel?.text = _tweet?.name
@@ -44,9 +43,6 @@ class TweetCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-
 }
 

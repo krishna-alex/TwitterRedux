@@ -27,7 +27,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //Set Navigation bar color
         //navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.11, green: 0.63, blue: 0.95, alpha: 1.0)
         //navigationController?.navigationBar.barStyle = UIBarStyle.black
-        
         navigationItem.titleView = UIImageView.init(image: UIImage(named:"Twitter-icon1.png"))
         
         //get tweets from home timeline
@@ -43,7 +42,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func onLogoutButton(_ sender: Any) {
@@ -54,14 +52,11 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         TwitterClient.sharedInstance.homeTimeLine(success: { (tweets: [Tweet]) in
             self.tweets = tweets
             self.tweetsTableView.reloadData()
-            
-        }, failure: { (error: Error) in
+            }, failure: { (error: Error) in
             print(error.localizedDescription)
         })
-        
     }
 
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -76,7 +71,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tweetsTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TweetCell = tweetsTableView.dequeueReusableCell(withIdentifier: "TweetCell") as! TweetCell
-        
         let resultTweet:Tweet
         resultTweet = tweets[indexPath.row]
         cell.singleTweet = resultTweet
@@ -85,7 +79,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
-        
         getTweets()
         // Tell the refreshControl to stop spinning
         refreshControl.endRefreshing()
@@ -104,8 +97,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
-    
-    
 }
 
 

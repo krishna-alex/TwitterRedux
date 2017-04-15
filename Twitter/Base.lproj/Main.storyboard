@@ -215,7 +215,6 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button" image="Reply"/>
                                         <connections>
-                                            <action selector="onReplyButton:" destination="4fR-sb-ehj" eventType="touchUpInside" id="FBi-Et-bGS"/>
                                             <segue destination="PRZ-q5-gWg" kind="presentation" identifier="TweetReply" id="N5p-tM-PbA"/>
                                         </connections>
                                     </button>

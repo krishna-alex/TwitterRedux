@@ -18,7 +18,6 @@ class Tweet: NSObject {
     var profileUrl: NSURL?
     var name: String?
     
-    
     init(dictionary: NSDictionary) {
         tweetID = dictionary["id"] as? Int
         text = dictionary["text"] as? String
@@ -32,7 +31,6 @@ class Tweet: NSObject {
             formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
             createdAt = formatter.date(from: createdAtString)
         }
-        
         if let user = dictionary["user"] as? NSDictionary {
             screenName = user["screen_name"] as? String
             name = user["name"] as? String
@@ -40,8 +38,7 @@ class Tweet: NSObject {
             if let profileUrlString = profileUrlString {
                 profileUrl = NSURL(string: profileUrlString)
             }
-                    }
-        
+        }
     }
         
     class func tweetsWithArray(dictionaries: [NSDictionary]) -> [Tweet] {
@@ -49,7 +46,6 @@ class Tweet: NSObject {
         
         for dictionary in dictionaries {
             let tweet = Tweet(dictionary: dictionary)
-            
             tweets.append(tweet)
         }
         return tweets
@@ -93,6 +89,5 @@ class Tweet: NSObject {
         
         return dateFormatter;
     }
-    
 }
 
