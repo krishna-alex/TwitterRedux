@@ -9,7 +9,8 @@
 import UIKit
 
 class TweetDetailViewController: UIViewController {
-    @IBOutlet weak var profileImageView: UIImageView!
+    
+@IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var sreenNameLabel: UILabel!
     @IBOutlet weak var tweetTextLabel: UILabel!

@@ -90,7 +90,6 @@ class TwitterClient: BDBOAuth1SessionManager {
             print("failure ocurred", error)
             failure(error)
         })
-        
     }
     
     func retweet(params: NSDictionary?, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
@@ -101,7 +100,6 @@ class TwitterClient: BDBOAuth1SessionManager {
         }, failure: { (task: URLSessionDataTask?, error:Error) in
             failure(error)
         })
-        
     }
     
     func populateTweetByID(params: NSDictionary?, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
@@ -112,7 +110,6 @@ class TwitterClient: BDBOAuth1SessionManager {
         }) { (task: URLSessionDataTask?, error: Error) in
             failure(error)
         }
-        
     }
     
     func favorite(params: NSDictionary?, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
@@ -123,5 +120,4 @@ class TwitterClient: BDBOAuth1SessionManager {
             failure(error)
         })
     }
-
 }

@@ -13,7 +13,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var tweetTextView: UITextView!
     @IBOutlet weak var profileImageView: UIImageView!
-
+    @IBOutlet weak var characterCountLabel: UILabel!
+    @IBOutlet weak var tweetButton: UIBarButtonItem!
+    
     var user: User!
     var tweet: Tweet!
     var tweetID: Int = 0
@@ -85,6 +87,26 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
             print(error.localizedDescription)
         }
     }
+    
+    func textViewDidChange(_ tweetTextView: UITextView) {
+        let charCount = tweetTextView.text.characters.count
+        characterCountLabel.text = String(140 - charCount)
+        
+        switch charCount {
+        case Int.min...0:
+            tweetButton.isEnabled = false
+            break
+        case 1...140:
+            tweetButton.isEnabled = true
+            break
+        case 141...Int.max:
+            tweetButton.isEnabled = false
+            break
+        default:
+            break
+        }
+    }
+    
     
     /*
     // MARK: - Navigation

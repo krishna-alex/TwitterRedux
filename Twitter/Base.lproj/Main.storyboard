@@ -330,15 +330,23 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lt1-PQ-e6y">
+                                <rect key="frame" x="295" y="80" width="21" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Lt1-PQ-e6y" secondAttribute="trailing" constant="4" id="8Oa-Po-GQ2"/>
                             <constraint firstItem="aJi-Jn-aqC" firstAttribute="leading" secondItem="aMD-M8-0LX" secondAttribute="trailing" constant="8" id="BL7-MO-Ccu"/>
                             <constraint firstItem="aJi-Jn-aqC" firstAttribute="top" secondItem="tbo-wC-pkc" secondAttribute="bottom" constant="4" id="Q28-3B-6i9"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tbo-wC-pkc" secondAttribute="trailing" constant="8" id="Ya1-MF-fJF"/>
                             <constraint firstItem="tbo-wC-pkc" firstAttribute="top" secondItem="gh3-uQ-8i0" secondAttribute="bottom" constant="16" id="bGl-J4-SDg"/>
                             <constraint firstItem="tbo-wC-pkc" firstAttribute="leading" secondItem="aMD-M8-0LX" secondAttribute="trailing" constant="8" id="eeg-ig-YMX"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="aJi-Jn-aqC" secondAttribute="trailing" constant="8" id="lgB-KL-k1M"/>
+                            <constraint firstItem="Lt1-PQ-e6y" firstAttribute="top" secondItem="gh3-uQ-8i0" secondAttribute="bottom" constant="16" id="vDK-OP-Byl"/>
                             <constraint firstItem="aMD-M8-0LX" firstAttribute="top" secondItem="gh3-uQ-8i0" secondAttribute="bottom" constant="19" id="wBu-aQ-FVb"/>
                             <constraint firstItem="aMD-M8-0LX" firstAttribute="leading" secondItem="KFM-k8-ogh" secondAttribute="leading" constant="16" id="zx2-Uh-1cH"/>
                         </constraints>
@@ -358,8 +366,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="characterCountLabel" destination="Lt1-PQ-e6y" id="CIh-Fa-YrQ"/>
                         <outlet property="profileImageView" destination="aMD-M8-0LX" id="jlS-wc-6ys"/>
                         <outlet property="screenNameLabel" destination="aJi-Jn-aqC" id="gKD-Rf-4GF"/>
+                        <outlet property="tweetButton" destination="Aou-qD-yIT" id="XzV-0h-nwC"/>
                         <outlet property="tweetTextView" destination="cU9-un-jLP" id="KTb-O9-v39"/>
                         <outlet property="userNameLabel" destination="tbo-wC-pkc" id="gyO-uW-L49"/>
                     </connections>
