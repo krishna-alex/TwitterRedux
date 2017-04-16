@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol ComposeViewControllerDelegate {
+    @objc optional func ComposeViewController(ComposeViewController: ComposeViewController, didTweet tweet: Tweet)
+}
+
 class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
@@ -20,6 +24,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     var tweet: Tweet!
     var tweetID: Int = 0
     var replyTweet: Bool = false
+    weak var delegate: ComposeViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,8 +66,6 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
             tweetTextView.text = ""
             tweetTextView.textColor = .black
         }
-
-        //tweetTextView.becomeFirstResponder() //Optional
     }
     
     func textViewDidEndEditing(_ tweetTextView: UITextView)
@@ -81,6 +84,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         
         TwitterClient.sharedInstance.tweet(message: tweetMessage!, tweetID: tweetID, success: { (Tweet) in
             print("I tweeted")
+            self.delegate?.ComposeViewController?(ComposeViewController: self, didTweet: Tweet)
             self.dismiss(animated: true, completion: nil)
         }) { (error: Error) in
             print("tweet error")
@@ -106,16 +110,4 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
             break
         }
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

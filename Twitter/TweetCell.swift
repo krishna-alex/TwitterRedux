@@ -28,11 +28,13 @@ class TweetCell: UITableViewCell {
                 tweetTextLabel?.text = _tweet?.text
                 nameLabel?.text = _tweet?.name
                 screenNameLabel.text = "@" + (_tweet?.screenName)!
-                profilePicImageView.setImageWith(_tweet?.profileUrl as! URL)
+                //Load image off main thread.
+                profilePicImageView.imageFromServerURL(urlString: (_tweet?.profileUrl)!)
                 timestampLabel.text = _tweet?.getTimeElapsedSinceCreatedAt()
             }
         }
     }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,4 +47,21 @@ class TweetCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 }
+
+extension UIImageView {
+    public func imageFromServerURL(urlString: NSURL) {
+        
+        URLSession.shared.dataTask(with: urlString as URL, completionHandler: { (data, response, error) -> Void in
+            
+            if error != nil {
+                print(error as Any)
+                return
+            }
+            DispatchQueue.main.async(execute: { () -> Void in
+                let image = UIImage(data: data!)
+                self.image = image
+            })
+            
+        }).resume()
+    }}
 

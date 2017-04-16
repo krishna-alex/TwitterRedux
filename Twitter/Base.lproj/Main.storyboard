@@ -22,9 +22,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Cv-gk-GLk">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Cv-gk-GLk">
                                 <rect key="frame" x="54" y="350" width="213" height="79"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.35024676493886897" green="0.86494157216937351" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Log in with Twitter">
@@ -36,6 +35,12 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="5Cv-gk-GLk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="54" id="CqX-cN-OAL"/>
+                            <constraint firstAttribute="trailing" secondItem="5Cv-gk-GLk" secondAttribute="trailing" constant="53" id="N6a-bU-A9x"/>
+                            <constraint firstItem="5Cv-gk-GLk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="330" id="XuT-Gt-a6G"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5Cv-gk-GLk" secondAttribute="bottom" constant="139" id="wXH-Tk-a0y"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="mqm-Ib-zqf" kind="presentation" identifier="loginSegue" id="c84-um-MLP"/>
@@ -57,9 +62,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="92" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RDG-nW-b8G">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="92" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RDG-nW-b8G">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TweetCell" id="it9-iP-ir2" customClass="TweetCell" customModule="Twitter" customModuleProvider="target">
@@ -131,6 +135,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="RDG-nW-b8G" secondAttribute="trailing" id="1WX-Jc-K6C"/>
+                            <constraint firstItem="RDG-nW-b8G" firstAttribute="leading" secondItem="rxU-eP-AsS" secondAttribute="leading" id="QSB-Ea-PmM"/>
+                            <constraint firstItem="RDG-nW-b8G" firstAttribute="top" secondItem="rxU-eP-AsS" secondAttribute="top" id="gFr-DN-b7v"/>
+                            <constraint firstItem="czu-Ol-fX9" firstAttribute="top" secondItem="RDG-nW-b8G" secondAttribute="bottom" id="xwS-hr-gKZ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="Nht-vC-Agy">
                         <barButtonItem key="leftBarButtonItem" image="SignOut" id="pCn-ae-kK4">
@@ -142,7 +152,7 @@
                         <barButtonItem key="rightBarButtonItem" image="Compose" id="ZgO-OR-qnv">
                             <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="PRZ-q5-gWg" kind="presentation" id="YI3-pd-ar5"/>
+                                <segue destination="PRZ-q5-gWg" kind="presentation" identifier="TweetComposeView" id="YI3-pd-ar5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -279,9 +289,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="favoriteButton" destination="O4N-Jf-uH0" id="x6p-Eg-bqB"/>
                         <outlet property="likesLabel" destination="Far-Jf-mAf" id="Pup-jp-feY"/>
                         <outlet property="nameLabel" destination="Fkw-az-det" id="1AE-89-5fr"/>
                         <outlet property="profileImageView" destination="AMU-ix-l6h" id="S63-ua-Xbh"/>
+                        <outlet property="retweetButton" destination="XYz-10-dS4" id="ipe-vq-qh4"/>
                         <outlet property="retweetLabel" destination="QpP-ZK-3Lx" id="JXu-ry-XHu"/>
                         <outlet property="sreenNameLabel" destination="kxV-b8-JSE" id="nbe-HG-rkg"/>
                         <outlet property="tweetTextLabel" destination="cX9-BU-Kdd" id="05U-HB-b6I"/>
@@ -425,6 +437,6 @@
         <image name="Tweet" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="N5p-tM-PbA"/>
+        <segue reference="YI3-pd-ar5"/>
     </inferredMetricsTieBreakers>
 </document>

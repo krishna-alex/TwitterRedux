@@ -16,7 +16,9 @@ class TweetDetailViewController: UIViewController {
     @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var retweetLabel: UILabel!
     @IBOutlet weak var likesLabel: UILabel!
-
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var retweetButton: UIButton!
+    
     var image: UIImage!
     var name: String!
     var screenName: String!
@@ -43,40 +45,29 @@ class TweetDetailViewController: UIViewController {
     
     @IBAction func onRetweetButton(_ sender: Any) {
         let tweetID = tweet.tweetID
-        let params = ["id": tweetID] as [String : Any]
+        let params = ["id": tweetID!] as [String : Any]
 
         TwitterClient.sharedInstance.retweet(params: params as NSDictionary?,
             success: { (tweet: Tweet) in
             self.retweetResponse = tweet
             self.retweetLabel.text = "\(self.retweetResponse.retweetCount) RETWEETS"
         }, failure: { (error: Error?) in
-            print(error?.localizedDescription)
+            print(error?.localizedDescription as Any)
         })
     }
     
     @IBAction func onFavoriteButton(_ sender: Any) {
         let tweetID = tweet.tweetID
-        let params = ["id": tweetID] as [String : Any]
+        let params = ["id": tweetID!] as [String : Any]
         
         TwitterClient.sharedInstance.favorite(params: params as NSDictionary?,
             success: { (tweet: Tweet) in
             self.favoriteResponse = tweet
             self.likesLabel.text = "\(self.favoriteResponse.favouritesCount) LIKES"
         }, failure: { (error: Error?) in
-            print(error?.localizedDescription)
+            print(error?.localizedDescription as Any)
         })
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //segue for tweet reply to pass tweet ID.
