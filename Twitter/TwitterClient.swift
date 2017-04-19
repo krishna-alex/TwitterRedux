@@ -84,6 +84,23 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func user_timeline(user: User, maxId: Int? = nil, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        var params = ["count": 20]
+        params["user_id"] = user.id!
+        if maxId != nil {
+            params["max_id"] = maxId
+        }
+        
+        get("1.1/statuses/user_timeline.json", parameters: params, progress: nil,
+            success: { (task: URLSessionDataTask, response: Any?) -> Void in
+            let dictionaries = response as! [NSDictionary]
+            let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+            success(tweets)
+        }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error)
+        })
+    }
+    
     func tweet(message: String, tweetID: Int, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
         let params = ["status": message, "in_reply_to_status_id": tweetID] as [String : Any]
         print("tried to tweet", params)

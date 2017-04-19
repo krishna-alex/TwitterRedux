@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, ComposeViewControllerDelegate {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,ComposeViewControllerDelegate {
     
     
     @IBOutlet weak var profileImage: UIImageView!
@@ -18,18 +18,39 @@ class ProfileViewController: UIViewController, ComposeViewControllerDelegate {
     @IBOutlet weak var tweetsCountLabel: UILabel!
     @IBOutlet weak var followingCountLabel: UILabel!
     @IBOutlet weak var followersCountLabel: UILabel!
+    @IBOutlet weak var userTweetsTableView: UITableView!
     
     var user: User!
+    var tweets: [Tweet]!
+    var lastTweetId: Int? = nil
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
     private var composeNavigationController: UIViewController!
     private var composeSegueIdentifier: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        userTweetsTableView.dataSource = self
+        userTweetsTableView.delegate = self
+        userTweetsTableView.estimatedRowHeight = 60
+        userTweetsTableView.rowHeight = UITableViewAutomaticDimension
+        
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.29, green: 0.73, blue: 0.93, alpha: 1.0)
         navigationController?.navigationBar.barStyle = UIBarStyle.black
         profileImage.layer.cornerRadius = 3
         profileImage.clipsToBounds = true
+        
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRect(x: 0, y: userTweetsTableView.contentSize.height, width: userTweetsTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        userTweetsTableView.addSubview(loadingMoreView!)
+        
+        var insets = userTweetsTableView.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        userTweetsTableView.contentInset = insets
+
         
         TwitterClient.sharedInstance.currentAccount(success: { (user: User) in
             self.user = user
@@ -39,6 +60,7 @@ class ProfileViewController: UIViewController, ComposeViewControllerDelegate {
             self.profileBackgroundImage.setImageWith(user.backgroundImageUrl as! URL)
             self.followersCountLabel.text = "\(user.followersCount ?? 0)"
             self.followingCountLabel.text = "\(user.followingCount ?? 0)"
+            self.getUserTweets()
         }) { (error: Error) in
             print(error.localizedDescription)
         }
@@ -52,6 +74,63 @@ class ProfileViewController: UIViewController, ComposeViewControllerDelegate {
     
     @IBAction func onLogoutButton(_ sender: Any) {
         TwitterClient.sharedInstance.logout()
+    }
+    
+    func getUserTweets() {
+        if (tweets) != nil {
+            //Since maxId value is inclusive, subtract 1 from the lowest Tweet ID returned from the previous request and use this for the value of max_id
+            lastTweetId = tweets[tweets.endIndex - 1].tweetID! - 1 as Int
+        }
+        TwitterClient.sharedInstance.user_timeline(user: user, maxId: lastTweetId, success: { (tweets: [Tweet]) in
+            self.isMoreDataLoading = false
+            // Stop the loading indicator
+            self.loadingMoreView!.stopAnimating()
+            if (self.tweets) != nil {
+                self.tweets.append(contentsOf: tweets)
+            } else {
+                self.tweets = tweets
+            }
+            
+            self.userTweetsTableView.reloadData()
+        }, failure: { (error: Error) in
+            print(error.localizedDescription)
+        })
+        
+//        TwitterClient.sharedInstance.homeTimeLine(maxId: lastTweetId, success: { (tweets: [Tweet]) in
+//            self.isMoreDataLoading = false
+//            // Stop the loading indicator
+//            self.loadingMoreView!.stopAnimating()
+//            if (self.tweets) != nil {
+//                self.tweets.append(contentsOf: tweets)
+//            } else {
+//                self.tweets = tweets
+//            }
+//            
+//            self.userTweetsTableView.reloadData()
+//        }, failure: { (error: Error) in
+//            print(error.localizedDescription)
+//        })
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ userTweetsTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (tweets != nil) {
+            return tweets.count
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(_ userTweetsTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: TweetCell = userTweetsTableView.dequeueReusableCell(withIdentifier: "TweetCell") as! TweetCell
+        let resultTweet:Tweet
+        resultTweet = tweets[indexPath.row]
+        cell.singleTweet = resultTweet
+        
+        return cell
     }
     
     @IBAction func onComposeButton(_ sender: Any) {

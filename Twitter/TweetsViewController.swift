@@ -25,6 +25,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
         
         navigationItem.titleView = UIImageView.init(image: UIImage(named:"Twitter-icon1.png"))
+        navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.29, green: 0.73, blue: 0.93, alpha: 1.0)
+        navigationController?.navigationBar.barStyle = UIBarStyle.black
+
         
         // Set up Infinite Scroll loading indicator
         let frame = CGRect(x: 0, y: tweetsTableView.contentSize.height, width: tweetsTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
