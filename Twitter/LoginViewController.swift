@@ -10,9 +10,14 @@ import UIKit
 import BDBOAuth1Manager
 
 class LoginViewController: UIViewController {
+    
+    private var homeViewController: UIViewController!
+    private var menuViewController: UIViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -23,7 +28,16 @@ class LoginViewController: UIViewController {
     
     @IBAction func onLoginButton(_ sender: Any) {
         TwitterClient.sharedInstance.login(success: {
-            self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            //self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+            let menuViewController = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+            
+            menuViewController.homeViewController = homeViewController
+            homeViewController.menuViewController = menuViewController
+            self.present(homeViewController, animated:true, completion:nil)
+            //self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            
         }) { (error: Error) in
             print(error.localizedDescription)
         }

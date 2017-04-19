@@ -20,9 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if User.currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+            let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
             
-            window?.rootViewController = vc
+            window?.rootViewController = homeViewController
+            //let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+            let menuViewController = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+            
+            menuViewController.homeViewController = homeViewController
+            homeViewController.menuViewController = menuViewController
+            
         }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil, queue: OperationQueue.main) { (Notification) -> Void in
@@ -31,6 +37,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             self.window?.rootViewController = vc
         }
+        
+       // let homeViewController = window!.rootViewController as! HomeViewController
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+//        let menuViewController = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+//        
+//        menuViewController.homeViewController = homeViewController
+//        homeViewController.menuViewController = menuViewController
+        
         return true
     }
 
