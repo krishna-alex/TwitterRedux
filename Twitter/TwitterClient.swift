@@ -68,6 +68,17 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func getUserByScreenname(screenname: NSString, success: @escaping (User) -> (), failure: @escaping (Error) -> ()) {
+        get("1.1/users/lookup.json?screen_name=" + String(screenname), parameters: nil, progress: nil,
+            success: { (task: URLSessionDataTask, response: Any?) -> Void in
+            let userDictionary = response as! [NSDictionary]
+            let user = User(dictionary: userDictionary[0])
+            success(user)
+        }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error)
+        })
+    }
+    
     func homeTimeLine(maxId: Int? = nil, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
         var params = ["count": 20]
         if maxId != nil {

@@ -15,6 +15,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
+    let tapRecognizer1: UITapGestureRecognizer = UITapGestureRecognizer()
     
     private var _tweet: Tweet?
     

@@ -10,7 +10,6 @@ import UIKit
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,ComposeViewControllerDelegate {
     
-    
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileBackgroundImage: UIImageView!
     @IBOutlet weak var profileNameLabel: UILabel!
@@ -27,7 +26,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var loadingMoreView:InfiniteScrollActivityView?
     private var composeNavigationController: UIViewController!
     private var composeSegueIdentifier: String!
-
+    private var tweetScreenName: String?
+    private var userScreenName: String?
+//    var tweetUserData: String?
+    
+    var tweetUserData: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,20 +54,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         var insets = userTweetsTableView.contentInset
         insets.bottom += InfiniteScrollActivityView.defaultHeight
         userTweetsTableView.contentInset = insets
-
         
-        TwitterClient.sharedInstance.currentAccount(success: { (user: User) in
-            self.user = user
-            self.profileNameLabel.text = user.name
-            self.profileScreenNameLabel.text = "@" + user.screenName!
-            self.profileImage.setImageWith(user.profileUrl as! URL)
-            self.profileBackgroundImage.setImageWith(user.backgroundImageUrl as! URL)
-            self.followersCountLabel.text = "\(user.followersCount ?? 0)"
-            self.followingCountLabel.text = "\(user.followingCount ?? 0)"
-            self.getUserTweets()
-        }) { (error: Error) in
-            print(error.localizedDescription)
-        }
+        getUserInfo()
         
     }
 
@@ -74,6 +66,28 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func onLogoutButton(_ sender: Any) {
         TwitterClient.sharedInstance.logout()
+    }
+    
+    func getUserInfo() {
+        if let screenName = tweetUserData {
+            userScreenName = screenName
+        } else {
+            userScreenName = User.currentUser?.screenName
+        }
+    
+        TwitterClient.sharedInstance.getUserByScreenname(screenname: userScreenName as! NSString, success: { (user: User) in
+            self.user = user
+            self.profileNameLabel.text = user.name
+            self.profileScreenNameLabel.text = "@" + user.screenName!
+            self.profileImage.setImageWith(user.profileUrl as! URL)
+            self.profileBackgroundImage.setImageWith(user.backgroundImageUrl as! URL)
+            self.followersCountLabel.text = "\(user.followersCount ?? 0)"
+            self.followingCountLabel.text = "\(user.followingCount ?? 0)"
+            self.getUserTweets()
+            
+        }, failure: { (error: Error) in
+            print(error.localizedDescription)
+        })
     }
     
     func getUserTweets() {
@@ -95,21 +109,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }, failure: { (error: Error) in
             print(error.localizedDescription)
         })
-        
-//        TwitterClient.sharedInstance.homeTimeLine(maxId: lastTweetId, success: { (tweets: [Tweet]) in
-//            self.isMoreDataLoading = false
-//            // Stop the loading indicator
-//            self.loadingMoreView!.stopAnimating()
-//            if (self.tweets) != nil {
-//                self.tweets.append(contentsOf: tweets)
-//            } else {
-//                self.tweets = tweets
-//            }
-//            
-//            self.userTweetsTableView.reloadData()
-//        }, failure: { (error: Error) in
-//            print(error.localizedDescription)
-//        })
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -133,14 +132,32 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = userTweetsTableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - userTweetsTableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && userTweetsTableView.isDragging) {
+                isMoreDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRect(x: 0, y: userTweetsTableView.contentSize.height, width: userTweetsTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                // Load more results
+                getUserTweets()
+            }
+        }
+    }
+    
     @IBAction func onComposeButton(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         composeNavigationController = storyboard.instantiateViewController(withIdentifier: "ComposeNavigationController")
         composeSegueIdentifier = "composeSegue"
         self.present(composeNavigationController, animated:true, completion:nil)
-        
-//        let secondViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as LoginViewController
-//        self.navigationController?.pushViewController(secondViewController, animated: true)
     }
 
     
