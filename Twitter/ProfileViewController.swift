@@ -20,7 +20,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var userTweetsTableView: UITableView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scrollView: UIScrollView!
-    
+    @IBOutlet var profileUIView: UIView!
     
     var user: User!
     var tweets: [Tweet]!
@@ -39,6 +39,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         userTweetsTableView.delegate = self
         userTweetsTableView.estimatedRowHeight = 60
         userTweetsTableView.rowHeight = UITableViewAutomaticDimension
+//        self.profileUIView.backgroundColor = .black
+//        self.profileUIView.alpha = 0.5;
+        //profileUIView.backgroundColor = UIColor(white: 1, alpha: 0.5)
         
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.29, green: 0.73, blue: 0.93, alpha: 1.0)
         navigationController?.navigationBar.barStyle = UIBarStyle.black
@@ -46,6 +49,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileImage.clipsToBounds = true
         
         self.scrollView.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:self.view.frame.height)
+        //userTweetsTableView.backgroundColor = UIColor(white: 1, alpha: 0.5)
         let tweetsTable = userTweetsTableView!
         let favTable = userTweetsTableView!
         self.scrollView.addSubview(tweetsTable)
@@ -131,13 +135,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let resultTweet:Tweet
         resultTweet = tweets[indexPath.row]
         cell.singleTweet = resultTweet
-        
+        animate(cell: cell)
         return cell
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
         // Test the offset and calculate the current page after scrolling ends
-        print("In scrollViewDidEndDecelerating")
         let pageWidth:CGFloat = scrollView.frame.width
         let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
         // Change the indicator
@@ -148,9 +151,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }else if Int(currentPage) == 1{
             tweetType = "Favourites"
         }
-        print("tweetType", tweetType)
         getUserTweets()
         userTweetsTableView.reloadData()
+    }
+    
+    func animate(cell: TweetCell) {
+        let view = cell.contentView
+        view.layer.opacity = 0.1
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction, .transitionCurlUp], animations: { () -> Void in
+            view.layer.opacity = 1
+        }, completion: nil)
     }
     
     @IBAction func onComposeButton(_ sender: Any) {

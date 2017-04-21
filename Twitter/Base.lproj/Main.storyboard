@@ -543,6 +543,7 @@
                         <outlet property="profileImage" destination="geg-x5-Pp3" id="csg-Tv-TdG"/>
                         <outlet property="profileNameLabel" destination="uib-bm-uki" id="rk5-fG-KwY"/>
                         <outlet property="profileScreenNameLabel" destination="UHK-e0-FtS" id="J7P-xZ-Ub5"/>
+                        <outlet property="profileUIView" destination="TXG-xW-B8W" id="Q9v-DB-Hfi"/>
                         <outlet property="scrollView" destination="Dch-aQ-fzd" id="VvG-u0-nKj"/>
                         <outlet property="userTweetsTableView" destination="hWy-YD-sdM" id="Gl0-34-xtV"/>
                     </connections>
