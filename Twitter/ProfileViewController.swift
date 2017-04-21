@@ -65,7 +65,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func onLogoutButton(_ sender: Any) {
-        TwitterClient.sharedInstance.logout()
+        navigationController?.popViewController(animated: true)
+        //dismiss(animated: true, completion: nil)
     }
     
     func getUserInfo() {

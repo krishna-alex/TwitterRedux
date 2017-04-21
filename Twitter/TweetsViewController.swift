@@ -16,7 +16,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var isMoreDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
     private var profileNavigationController: UIViewController!
-    private var profileSegueIdentifier: String!
+    //private var profileSegueIdentifier: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()

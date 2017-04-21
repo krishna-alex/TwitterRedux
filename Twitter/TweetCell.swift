@@ -15,6 +15,8 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
+    @IBOutlet weak var retweetLabel: UILabel!
+    
     let tapRecognizer1: UITapGestureRecognizer = UITapGestureRecognizer()
     
     private var _tweet: Tweet?
@@ -32,6 +34,10 @@ class TweetCell: UITableViewCell {
                 //Load image off main thread.
                 profilePicImageView.imageFromServerURL(urlString: (_tweet?.profileUrl)!)
                 timestampLabel.text = _tweet?.getTimeElapsedSinceCreatedAt()
+                retweetLabel.text = ""
+                if(_tweet?.retweeted == true) {
+                    retweetLabel.text = "Retweeted"
+                }
             }
         }
     }

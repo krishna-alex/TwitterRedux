@@ -34,7 +34,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         viewControllers.append(timelineNavigationController)
         viewControllers.append(mentionsNavigationController)
         
-        homeViewController.contentViewController = profileNavigationController
+        homeViewController.contentViewController = timelineNavigationController
     }
 
     override func didReceiveMemoryWarning() {
