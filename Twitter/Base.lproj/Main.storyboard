@@ -321,6 +321,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dch-aQ-fzd">
+                                <rect key="frame" x="0.0" y="220" width="320" height="348"/>
+                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEN-Hw-WNf">
                                 <rect key="frame" x="0.0" y="190.5" width="320" height="40"/>
                                 <subviews>
@@ -479,6 +482,12 @@
                                     <constraint firstAttribute="width" constant="77" id="ioG-oY-4GO"/>
                                 </constraints>
                             </imageView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="KAG-qk-TH9">
+                                <rect key="frame" x="127" y="211" width="62" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="currentPageIndicatorTintColor" red="0.43524041810000003" green="0.63269867800000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -486,11 +495,13 @@
                             <constraint firstItem="DJs-Pc-mfv" firstAttribute="centerX" secondItem="TXG-xW-B8W" secondAttribute="centerX" id="2aM-ld-Lbh"/>
                             <constraint firstItem="geg-x5-Pp3" firstAttribute="centerX" secondItem="TXG-xW-B8W" secondAttribute="centerX" constant="-1.5" id="3Mf-Vm-hAj"/>
                             <constraint firstAttribute="trailing" secondItem="aEN-Hw-WNf" secondAttribute="trailing" id="AkL-EC-tF7"/>
+                            <constraint firstAttribute="bottom" secondItem="Dch-aQ-fzd" secondAttribute="bottom" id="D5R-H6-n0G"/>
                             <constraint firstItem="UHK-e0-FtS" firstAttribute="top" secondItem="uib-bm-uki" secondAttribute="bottom" constant="1.5" id="Dsp-sw-9hg"/>
                             <constraint firstItem="uib-bm-uki" firstAttribute="centerX" secondItem="DJs-Pc-mfv" secondAttribute="centerX" id="DtM-id-At4"/>
                             <constraint firstItem="hWy-YD-sdM" firstAttribute="top" secondItem="aEN-Hw-WNf" secondAttribute="bottom" id="FxY-PP-wTz"/>
                             <constraint firstItem="UHK-e0-FtS" firstAttribute="top" secondItem="uib-bm-uki" secondAttribute="bottom" constant="1.5" id="Imc-kn-52Y"/>
                             <constraint firstItem="geg-x5-Pp3" firstAttribute="top" secondItem="kqx-BM-0gX" secondAttribute="bottom" constant="8" id="KkY-Q9-JLG"/>
+                            <constraint firstItem="Dch-aQ-fzd" firstAttribute="leading" secondItem="TXG-xW-B8W" secondAttribute="leading" id="Lnk-GR-z5j"/>
                             <constraint firstItem="aEN-Hw-WNf" firstAttribute="top" secondItem="UHK-e0-FtS" secondAttribute="bottom" constant="12.5" id="TsB-m5-3J5"/>
                             <constraint firstAttribute="trailing" secondItem="hWy-YD-sdM" secondAttribute="trailing" id="WgU-IB-PGz"/>
                             <constraint firstItem="hWy-YD-sdM" firstAttribute="top" secondItem="aEN-Hw-WNf" secondAttribute="bottom" id="Xii-Fe-tF7"/>
@@ -499,11 +510,13 @@
                             <constraint firstItem="hWy-YD-sdM" firstAttribute="leading" secondItem="TXG-xW-B8W" secondAttribute="leading" id="dwB-Xb-wxm"/>
                             <constraint firstItem="aEN-Hw-WNf" firstAttribute="top" secondItem="DJs-Pc-mfv" secondAttribute="bottom" id="gHB-Cg-uWF"/>
                             <constraint firstItem="uib-bm-uki" firstAttribute="top" secondItem="geg-x5-Pp3" secondAttribute="bottom" constant="8" id="hJR-oa-MLF"/>
+                            <constraint firstAttribute="trailing" secondItem="Dch-aQ-fzd" secondAttribute="trailing" id="ilA-eM-vJ0"/>
                             <constraint firstItem="DJs-Pc-mfv" firstAttribute="centerX" secondItem="TXG-xW-B8W" secondAttribute="centerX" id="lYG-2D-UYZ"/>
                             <constraint firstAttribute="bottom" secondItem="hWy-YD-sdM" secondAttribute="bottom" id="ueM-rS-ViN"/>
                             <constraint firstItem="aEN-Hw-WNf" firstAttribute="leading" secondItem="TXG-xW-B8W" secondAttribute="leading" id="ugJ-39-Zx5"/>
                             <constraint firstItem="UHK-e0-FtS" firstAttribute="centerX" secondItem="DJs-Pc-mfv" secondAttribute="centerX" id="v8d-R0-f6o"/>
                             <constraint firstItem="aEN-Hw-WNf" firstAttribute="leading" secondItem="TXG-xW-B8W" secondAttribute="leading" id="x68-w5-DzA"/>
+                            <constraint firstItem="Dch-aQ-fzd" firstAttribute="top" secondItem="DJs-Pc-mfv" secondAttribute="bottom" constant="29.5" id="yAf-TM-ndz"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -525,10 +538,12 @@
                     <connections>
                         <outlet property="followersCountLabel" destination="Lnp-IF-s7s" id="k4g-s0-XkW"/>
                         <outlet property="followingCountLabel" destination="Pl8-ds-ZLb" id="Qme-VA-VJ6"/>
+                        <outlet property="pageControl" destination="KAG-qk-TH9" id="sXh-yc-MRZ"/>
                         <outlet property="profileBackgroundImage" destination="MP4-kP-DAe" id="7zr-6E-0cd"/>
                         <outlet property="profileImage" destination="geg-x5-Pp3" id="csg-Tv-TdG"/>
                         <outlet property="profileNameLabel" destination="uib-bm-uki" id="rk5-fG-KwY"/>
                         <outlet property="profileScreenNameLabel" destination="UHK-e0-FtS" id="J7P-xZ-Ub5"/>
+                        <outlet property="scrollView" destination="Dch-aQ-fzd" id="VvG-u0-nKj"/>
                         <outlet property="userTweetsTableView" destination="hWy-YD-sdM" id="Gl0-34-xtV"/>
                     </connections>
                 </viewController>

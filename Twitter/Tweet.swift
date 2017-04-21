@@ -44,26 +44,26 @@ class Tweet: NSObject {
             }
         } else {
             retweeted = false
-        tweetID = dictionary["id"] as? Int
-        text = dictionary["text"] as? String
-        retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
-        favouritesCount = (dictionary["favorite_count"] as? Int) ?? 0
+            tweetID = dictionary["id"] as? Int
+            text = dictionary["text"] as? String
+            retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
+            favouritesCount = (dictionary["favorite_count"] as? Int) ?? 0
         
-        let createdAtString = dictionary["created_at"] as? String
-        if let createdAtString = createdAtString {
-            let formatter = DateFormatter()
-            //sample created_at value - Tue Aug 28 21:16:23 +0000 2012
-            formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
-            createdAt = formatter.date(from: createdAtString)
-        }
-        if let user = dictionary["user"] as? NSDictionary {
-            screenName = user["screen_name"] as? String
-            name = user["name"] as? String
-            let profileUrlString = user["profile_image_url_https"] as? String
-            if let profileUrlString = profileUrlString {
-                profileUrl = NSURL(string: profileUrlString)
+            let createdAtString = dictionary["created_at"] as? String
+            if let createdAtString = createdAtString {
+                let formatter = DateFormatter()
+                //sample created_at value - Tue Aug 28 21:16:23 +0000 2012
+                formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
+                createdAt = formatter.date(from: createdAtString)
             }
-        }
+            if let user = dictionary["user"] as? NSDictionary {
+                screenName = user["screen_name"] as? String
+                name = user["name"] as? String
+                let profileUrlString = user["profile_image_url_https"] as? String
+                if let profileUrlString = profileUrlString {
+                    profileUrl = NSURL(string: profileUrlString)
+                }
+            }
         }
     }
         

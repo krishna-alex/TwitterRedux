@@ -89,7 +89,6 @@ class TwitterClient: BDBOAuth1SessionManager {
             success: { (task: URLSessionDataTask, response: Any?) -> Void in
             let dictionaries = response as! [NSDictionary]
             let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
-            print(response)
             success(tweets)
         }, failure: { (task:URLSessionDataTask?, error: Error) -> Void in
             failure(error)
@@ -135,6 +134,21 @@ class TwitterClient: BDBOAuth1SessionManager {
                 let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
                 success(tweets)
 
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            print("failure ocurred", error)
+            failure(error)
+        })
+    }
+    
+    func getFavourites(screenName: String, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        let params = ["screen_name": screenName] as [String : Any]
+        //print("tried to tweet", params)
+        get("1.1/favorites/list.json", parameters: params, progress: nil,
+            success: { (task: URLSessionDataTask, response: Any?) in
+                let dictionaries = response as! [NSDictionary]
+                let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+                success(tweets)
+                
         }, failure: { (task: URLSessionDataTask?, error: Error) in
             print("failure ocurred", error)
             failure(error)

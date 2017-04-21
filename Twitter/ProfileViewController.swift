@@ -18,18 +18,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var followingCountLabel: UILabel!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var userTweetsTableView: UITableView!
+    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     
     var user: User!
     var tweets: [Tweet]!
     var lastTweetId: Int? = nil
-    var isMoreDataLoading = false
-    var loadingMoreView:InfiniteScrollActivityView?
     private var composeNavigationController: UIViewController!
     private var composeSegueIdentifier: String!
     private var tweetScreenName: String?
     private var userScreenName: String?
-//    var tweetUserData: String?
-    
+    private var tweetType: String?
     var tweetUserData: String?
     
     override func viewDidLoad() {
@@ -45,16 +45,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileImage.layer.cornerRadius = 3
         profileImage.clipsToBounds = true
         
-        // Set up Infinite Scroll loading indicator
-        let frame = CGRect(x: 0, y: userTweetsTableView.contentSize.height, width: userTweetsTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
-        loadingMoreView = InfiniteScrollActivityView(frame: frame)
-        loadingMoreView!.isHidden = true
-        userTweetsTableView.addSubview(loadingMoreView!)
+        self.scrollView.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:self.view.frame.height)
+        let tweetsTable = userTweetsTableView!
+        let favTable = userTweetsTableView!
+        self.scrollView.addSubview(tweetsTable)
+        self.scrollView.addSubview(favTable)
         
-        var insets = userTweetsTableView.contentInset
-        insets.bottom += InfiniteScrollActivityView.defaultHeight
-        userTweetsTableView.contentInset = insets
+        self.scrollView.contentSize = CGSize(width:self.scrollView.frame.width * 4, height:self.scrollView.frame.height)
+        self.scrollView.delegate = self
         
+        //set the current page and set the tweets to load as user tweets
+        self.pageControl.currentPage = 0
+        tweetType = "Tweets"
+        
+        //Load the user info and tweets.
         getUserInfo()
         
     }
@@ -92,24 +96,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func getUserTweets() {
-        if (tweets) != nil {
-            //Since maxId value is inclusive, subtract 1 from the lowest Tweet ID returned from the previous request and use this for the value of max_id
-            lastTweetId = tweets[tweets.endIndex - 1].tweetID! - 1 as Int
-        }
-        TwitterClient.sharedInstance.user_timeline(user: user, maxId: lastTweetId, success: { (tweets: [Tweet]) in
-            self.isMoreDataLoading = false
-            // Stop the loading indicator
-            self.loadingMoreView!.stopAnimating()
-            if (self.tweets) != nil {
-                self.tweets.append(contentsOf: tweets)
-            } else {
-                self.tweets = tweets
-            }
-            
+        if tweetType == "Tweets" {
+            TwitterClient.sharedInstance.user_timeline(user: user, success: { (tweets: [Tweet]) in
+            self.tweets = tweets
             self.userTweetsTableView.reloadData()
         }, failure: { (error: Error) in
             print(error.localizedDescription)
         })
+        } else {
+            let screenName = user.screenName!
+            TwitterClient.sharedInstance.getFavourites(screenName: screenName, success: { (tweets:[Tweet]) in
+                self.tweets = tweets
+                self.userTweetsTableView.reloadData()
+            }, failure: { (error: Error) in
+                print(error.localizedDescription)
+            })
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -133,25 +135,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (!isMoreDataLoading) {
-            // Calculate the position of one screen length before the bottom of the results
-            let scrollViewContentHeight = userTweetsTableView.contentSize.height
-            let scrollOffsetThreshold = scrollViewContentHeight - userTweetsTableView.bounds.size.height
-            
-            // When the user has scrolled past the threshold, start requesting
-            if(scrollView.contentOffset.y > scrollOffsetThreshold && userTweetsTableView.isDragging) {
-                isMoreDataLoading = true
-                
-                // Update position of loadingMoreView, and start loading indicator
-                let frame = CGRect(x: 0, y: userTweetsTableView.contentSize.height, width: userTweetsTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
-                loadingMoreView?.frame = frame
-                loadingMoreView!.startAnimating()
-                
-                // Load more results
-                getUserTweets()
-            }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
+        // Test the offset and calculate the current page after scrolling ends
+        print("In scrollViewDidEndDecelerating")
+        let pageWidth:CGFloat = scrollView.frame.width
+        let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
+        // Change the indicator
+        self.pageControl.currentPage = Int(currentPage);
+        // Change the content accordingly
+        if Int(currentPage) == 0{
+            tweetType = "Tweets"
+        }else if Int(currentPage) == 1{
+            tweetType = "Favourites"
         }
+        print("tweetType", tweetType)
+        getUserTweets()
+        userTweetsTableView.reloadData()
     }
     
     @IBAction func onComposeButton(_ sender: Any) {
