@@ -308,6 +308,7 @@
 				TargetAttributes = {
 					6BCE20791E9D60A0002565BE = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = WTS9L482TJ;
 						ProvisioningStyle = Automatic;
 					};
 					6BCE208D1E9D60A0002565BE = {
@@ -678,6 +679,7 @@
 			baseConfigurationReference = 8C7B46EC003C1C7757E5E869 /* Pods-Twitter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = WTS9L482TJ;
 				INFOPLIST_FILE = Twitter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.krishnaalex.Twitter;
@@ -691,6 +693,7 @@
 			baseConfigurationReference = 71BCC05CCCB00265DB4A0C77 /* Pods-Twitter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = WTS9L482TJ;
 				INFOPLIST_FILE = Twitter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.krishnaalex.Twitter;

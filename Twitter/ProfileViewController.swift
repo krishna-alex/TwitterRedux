@@ -39,31 +39,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         userTweetsTableView.delegate = self
         userTweetsTableView.estimatedRowHeight = 60
         userTweetsTableView.rowHeight = UITableViewAutomaticDimension
-//        self.profileUIView.backgroundColor = .black
-//        self.profileUIView.alpha = 0.5;
-        //profileUIView.backgroundColor = UIColor(white: 1, alpha: 0.5)
         
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.29, green: 0.73, blue: 0.93, alpha: 1.0)
         navigationController?.navigationBar.barStyle = UIBarStyle.black
         profileImage.layer.cornerRadius = 3
         profileImage.clipsToBounds = true
         
-        self.scrollView.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:self.view.frame.height)
-        //userTweetsTableView.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        let tweetsTable = userTweetsTableView!
-        let favTable = userTweetsTableView!
-        self.scrollView.addSubview(tweetsTable)
-        self.scrollView.addSubview(favTable)
-        
-        self.scrollView.contentSize = CGSize(width:self.scrollView.frame.width * 4, height:self.scrollView.frame.height)
-        self.scrollView.delegate = self
-        
-        //set the current page and set the tweets to load as user tweets
-        self.pageControl.currentPage = 0
-        tweetType = "Tweets"
-        
         //Load the user info and tweets.
         getUserInfo()
+        
+        self.scrollView.isPagingEnabled = true
+        self.scrollView.contentSize = CGSize(width:self.scrollView.frame.width * 2, height:self.scrollView.frame.height)
+        self.scrollView.showsHorizontalScrollIndicator  = false
+        
+        loadScrollView()
         
     }
 
@@ -82,17 +71,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             userScreenName = screenName
         } else {
             userScreenName = User.currentUser?.screenName
+            self.navigationItem.leftBarButtonItem = nil
         }
     
-        TwitterClient.sharedInstance.getUserByScreenname(screenname: userScreenName as! NSString, success: { (user: User) in
+        TwitterClient.sharedInstance.getUserByScreenname(screenname: userScreenName! as NSString, success: { (user: User) in
             self.user = user
             self.profileNameLabel.text = user.name
             self.profileScreenNameLabel.text = "@" + user.screenName!
-            self.profileImage.setImageWith(user.profileUrl as! URL)
-            self.profileBackgroundImage.setImageWith(user.backgroundImageUrl as! URL)
+            self.profileImage.setImageWith(user.profileUrl! as URL)
+            self.profileBackgroundImage.setImageWith(user.backgroundImageUrl! as URL)
             self.followersCountLabel.text = "\(user.followersCount ?? 0)"
             self.followingCountLabel.text = "\(user.followingCount ?? 0)"
             self.getUserTweets()
+            //self.loadScrollView()
             
         }, failure: { (error: Error) in
             print(error.localizedDescription)
@@ -118,6 +109,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    func loadScrollView() {
+        let tweetsTable = userTweetsTableView!
+        let favTable = userTweetsTableView!
+        self.scrollView.addSubview(tweetsTable)
+        self.scrollView.addSubview(favTable)
+        self.scrollView.delegate = self
+        
+        //set the current page and set the tweets to load as user tweets
+        self.pageControl.currentPage = 0
+        tweetType = "Tweets"
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -139,12 +142,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
-        // Test the offset and calculate the current page after scrolling ends
-        let pageWidth:CGFloat = scrollView.frame.width
-        let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        // Calculate the current page after scrolling ends
         // Change the indicator
-        self.pageControl.currentPage = Int(currentPage);
+        let currentPage = scrollView.contentOffset.x / scrollView.frame.size.width
+        self.pageControl.currentPage = Int(currentPage)
+        userTweetsTableView.frame.size.width = self.view.bounds.size.width
+        userTweetsTableView.frame.origin.x = currentPage * self.view.bounds.size.width
         // Change the content accordingly
         if Int(currentPage) == 0{
             tweetType = "Tweets"
@@ -174,18 +178,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(composeSegueIdentifier == "composeSegue") {
-            let navigationController = segue.destination as! UINavigationController
-            let composeViewController = navigationController.topViewController as! ComposeViewController
-            composeViewController.delegate = self
-        }
-    }
-    
-//    func ComposeViewController(ComposeViewController: ComposeViewController, didTweet tweet: Tweet) {
-//        self.tweets.insert(tweet, at: 0)
-//        tweetsTableView.reloadData()
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if(composeSegueIdentifier == "composeSegue") {
+//            let navigationController = segue.destination as! UINavigationController
+//            let composeViewController = navigationController.topViewController as! ComposeViewController
+//            composeViewController.delegate = self
+//        }
 //    }
-//    
-
 }

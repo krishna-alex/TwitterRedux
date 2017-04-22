@@ -140,7 +140,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.26737658079999999" green="0.72767655919999996" blue="0.93182899750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="RDG-nW-b8G" secondAttribute="trailing" id="1WX-Jc-K6C"/>
                             <constraint firstItem="RDG-nW-b8G" firstAttribute="leading" secondItem="rxU-eP-AsS" secondAttribute="leading" id="QSB-Ea-PmM"/>
@@ -150,13 +150,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Timeline" id="Nht-vC-Agy">
                         <barButtonItem key="leftBarButtonItem" image="SignOut" id="pCn-ae-kK4">
-                            <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onLogoutButton:" destination="Ux2-yJ-yCz" id="58Q-DX-vVA"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Compose" id="ZgO-OR-qnv">
-                            <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="PRZ-q5-gWg" kind="presentation" identifier="TweetComposeView" id="YI3-pd-ar5"/>
                             </connections>
@@ -322,7 +322,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dch-aQ-fzd">
-                                <rect key="frame" x="0.0" y="220" width="320" height="348"/>
+                                <rect key="frame" x="0.0" y="230.5" width="320" height="337.5"/>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEN-Hw-WNf">
                                 <rect key="frame" x="0.0" y="190.5" width="320" height="40"/>
@@ -374,7 +374,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="91" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hWy-YD-sdM">
-                                <rect key="frame" x="0.0" y="230.5" width="320" height="337.5"/>
+                                <rect key="frame" x="0.0" y="230" width="320" height="338"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TweetCell" rowHeight="91" id="AYQ-7a-eYS" customClass="TweetCell" customModule="Twitter" customModuleProvider="target">
@@ -489,7 +489,7 @@
                                 <color key="currentPageIndicatorTintColor" red="0.43524041810000003" green="0.63269867800000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pageControl>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.26737658079999999" green="0.72767655919999996" blue="0.93182899750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="aEN-Hw-WNf" firstAttribute="top" secondItem="DJs-Pc-mfv" secondAttribute="bottom" id="0Y1-ed-FXP"/>
                             <constraint firstItem="DJs-Pc-mfv" firstAttribute="centerX" secondItem="TXG-xW-B8W" secondAttribute="centerX" id="2aM-ld-Lbh"/>
@@ -504,31 +504,30 @@
                             <constraint firstItem="Dch-aQ-fzd" firstAttribute="leading" secondItem="TXG-xW-B8W" secondAttribute="leading" id="Lnk-GR-z5j"/>
                             <constraint firstItem="aEN-Hw-WNf" firstAttribute="top" secondItem="UHK-e0-FtS" secondAttribute="bottom" constant="12.5" id="TsB-m5-3J5"/>
                             <constraint firstAttribute="trailing" secondItem="hWy-YD-sdM" secondAttribute="trailing" id="WgU-IB-PGz"/>
-                            <constraint firstItem="hWy-YD-sdM" firstAttribute="top" secondItem="aEN-Hw-WNf" secondAttribute="bottom" id="Xii-Fe-tF7"/>
                             <constraint firstAttribute="trailing" secondItem="aEN-Hw-WNf" secondAttribute="trailing" id="b1E-CJ-c5Y"/>
                             <constraint firstItem="uib-bm-uki" firstAttribute="top" secondItem="geg-x5-Pp3" secondAttribute="bottom" constant="8" id="cZb-5I-6Pp"/>
                             <constraint firstItem="hWy-YD-sdM" firstAttribute="leading" secondItem="TXG-xW-B8W" secondAttribute="leading" id="dwB-Xb-wxm"/>
                             <constraint firstItem="aEN-Hw-WNf" firstAttribute="top" secondItem="DJs-Pc-mfv" secondAttribute="bottom" id="gHB-Cg-uWF"/>
                             <constraint firstItem="uib-bm-uki" firstAttribute="top" secondItem="geg-x5-Pp3" secondAttribute="bottom" constant="8" id="hJR-oa-MLF"/>
-                            <constraint firstAttribute="trailing" secondItem="Dch-aQ-fzd" secondAttribute="trailing" id="ilA-eM-vJ0"/>
                             <constraint firstItem="DJs-Pc-mfv" firstAttribute="centerX" secondItem="TXG-xW-B8W" secondAttribute="centerX" id="lYG-2D-UYZ"/>
+                            <constraint firstItem="Dch-aQ-fzd" firstAttribute="top" secondItem="aEN-Hw-WNf" secondAttribute="bottom" id="mZZ-zs-4Lf"/>
+                            <constraint firstAttribute="trailing" secondItem="Dch-aQ-fzd" secondAttribute="trailing" id="ta1-S2-ayr"/>
                             <constraint firstAttribute="bottom" secondItem="hWy-YD-sdM" secondAttribute="bottom" id="ueM-rS-ViN"/>
                             <constraint firstItem="aEN-Hw-WNf" firstAttribute="leading" secondItem="TXG-xW-B8W" secondAttribute="leading" id="ugJ-39-Zx5"/>
                             <constraint firstItem="UHK-e0-FtS" firstAttribute="centerX" secondItem="DJs-Pc-mfv" secondAttribute="centerX" id="v8d-R0-f6o"/>
                             <constraint firstItem="aEN-Hw-WNf" firstAttribute="leading" secondItem="TXG-xW-B8W" secondAttribute="leading" id="x68-w5-DzA"/>
-                            <constraint firstItem="Dch-aQ-fzd" firstAttribute="top" secondItem="DJs-Pc-mfv" secondAttribute="bottom" constant="29.5" id="yAf-TM-ndz"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Profile" id="4NM-WJ-NNr">
                         <barButtonItem key="leftBarButtonItem" image="Cancel" id="non-yH-1lI">
-                            <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onLogoutButton:" destination="Iwq-Ux-Lmg" id="5aZ-Og-VIy"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Compose" id="oPU-i8-Hu5">
-                            <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onComposeButton:" destination="Iwq-Ux-Lmg" id="QKw-QU-5fA"/>
                             </connections>
@@ -645,17 +644,17 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.26737658079999999" green="0.72767655919999996" blue="0.93182899750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Mentions" id="H6I-wA-SKU">
                         <barButtonItem key="leftBarButtonItem" image="SignOut" id="Dm3-cz-Bta">
-                            <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onLogoutButton:" destination="87p-Vq-urf" id="yNT-UR-Uic"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Compose" id="39x-s6-ahe">
-                            <color key="tintColor" red="0.23923811249999999" green="0.59350812399999997" blue="0.6914459074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onComposeButton:" destination="87p-Vq-urf" id="Qf3-tb-a6N"/>
                             </connections>
@@ -879,8 +878,8 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKh-6u-ZiH">
                                                     <rect key="frame" x="21" y="22" width="86" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
