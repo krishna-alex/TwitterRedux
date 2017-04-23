@@ -16,7 +16,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var isMoreDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
     private var profileNavigationController: UIViewController!
-    //private var profileSegueIdentifier: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +25,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweetsTableView.estimatedRowHeight = 60
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
         
-        //navigationItem.titleView = UIImageView.init(image: UIImage(named:"Twitter-icon1.png"))
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.29, green: 0.73, blue: 0.93, alpha: 1.0)
         navigationController?.navigationBar.barStyle = UIBarStyle.black
-
         
         // Set up Infinite Scroll loading indicator
         let frame = CGRect(x: 0, y: tweetsTableView.contentSize.height, width: tweetsTableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
@@ -98,8 +95,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let resultTweet:Tweet
         resultTweet = tweets[indexPath.row]
         cell.singleTweet = resultTweet
-        let userScreenName = resultTweet.screenName
-        print("userScreenName", userScreenName)
+        //let userScreenName = resultTweet.screenName
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.img_Click(recognizer:)))
         recognizer.numberOfTapsRequired = 1;
         cell.profilePicImageView.addGestureRecognizer(recognizer)
@@ -110,15 +106,12 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         print("ok")
         let tapLocation = recognizer.location(in: self.tweetsTableView)
         let indexPath = self.tweetsTableView.indexPathForRow(at: tapLocation)
-        print(indexPath)
         let tweet = tweets[(indexPath?.row)!]
         let screenName = tweet.screenName!
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         profileViewController.tweetUserData = screenName
         navigationController?.pushViewController(profileViewController, animated: true)
-        //homeViewController.contentViewController = profileNavigationController
-       // self.present(profileNavigationController, animated:true, completion:nil)
     }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {

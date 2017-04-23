@@ -809,14 +809,14 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2EL-H7-NrO" userLabel="Content View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.26737658079999999" green="0.72767655919999996" blue="0.93182899750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.29411764705882354" green="0.73333333333333328" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="zWy-em-7Ja" appends="YES" id="Kyr-0Q-L5O"/>
                                 </connections>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.26737658079999999" green="0.72767655919999996" blue="0.93182899750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.29411764709999999" green="0.73333333329999995" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="pBx-RP-xZq" firstAttribute="top" secondItem="0IS-DV-3Po" secondAttribute="top" constant="66" id="2e1-cF-IYZ"/>
                             <constraint firstAttribute="trailing" secondItem="pBx-RP-xZq" secondAttribute="trailing" id="2zc-ga-915"/>
@@ -866,7 +866,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="sectionIndexBackgroundColor" red="0.26737658078808607" green="0.72767655918444329" blue="0.93182899746192893" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.29411764709999999" green="0.73333333329999995" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MenuCell" rowHeight="70" id="vRX-WC-VEA" customClass="MenuCell" customModule="Twitter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="70"/>
@@ -883,9 +883,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.26737658079999999" green="0.72767655919999996" blue="0.93182899750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.29411764709999999" green="0.73333333329999995" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.26737658079999999" green="0.72767655919999996" blue="0.93182899750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.29411764705882354" green="0.73333333333333328" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="menuTitleLabel" destination="WKh-6u-ZiH" id="3Lo-Ak-BFe"/>
                                         </connections>
@@ -893,7 +893,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.26737658079999999" green="0.72767655919999996" blue="0.93182899750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.29411764705882354" green="0.73333333333333328" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="WRB-4X-5AF" id="mqa-us-jJN"/>

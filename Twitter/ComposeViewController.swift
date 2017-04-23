@@ -46,7 +46,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
             self.user = user
             self.userNameLabel.text = user.name
             self.screenNameLabel.text = "@" + user.screenName!
-            self.profileImageView.setImageWith(user.profileUrl as! URL)
+            self.profileImageView.setImageWith(user.profileUrl! as URL)
         }) { (error: Error) in
             print(error.localizedDescription)
         }
@@ -83,11 +83,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         let tweetMessage = tweetTextView.text
         
         TwitterClient.sharedInstance.tweet(message: tweetMessage!, tweetID: tweetID, success: { (Tweet) in
-            print("I tweeted")
             self.delegate?.ComposeViewController?(ComposeViewController: self, didTweet: Tweet)
             self.dismiss(animated: true, completion: nil)
         }) { (error: Error) in
-            print("tweet error")
             print(error.localizedDescription)
         }
     }
